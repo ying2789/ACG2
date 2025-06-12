@@ -21,24 +21,24 @@ const SceneManager = {
                     arContent.removeChild(arContent.firstChild);
                 }
                 
-                // Create ground (grass patch with dirt path)
-                const ground = ModelManager.createModelEntity('grassPatch', '0 0 0');
+                // Create ground (grass patch with dirt path) - centered at origin and moved further back
+                const ground = ModelManager.createModelEntity('grassPatch', '0 0 -4');
                 arContent.appendChild(ground);
                 
-                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 0');
+                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 -4');
                 arContent.appendChild(path);
                 
-                // Create tree
-                const tree = ModelManager.createModelEntity('tree', '1 0 -1', '0 45 0');
+                // Create tree - positioned to the right side and further back
+                const tree = ModelManager.createModelEntity('tree', '0.8 0 -4.5', '0 45 0');
                 arContent.appendChild(tree);
                 
-                // Create tortoise
-                const tortoise = ModelManager.createModelEntity('tortoise', '-0.6 0.3 0', '0 90 0');
+                // Create tortoise - positioned to the left and further back
+                const tortoise = ModelManager.createModelEntity('tortoise', '-0.5 0.3 -4', '0 90 0');
                 ModelManager.playAnimation('tortoise', 'idle');
                 arContent.appendChild(tortoise);
                 
-                // Create hare
-                const hare = ModelManager.createModelEntity('hare', '0.5 0 0', '0 -90 0');
+                // Create hare - positioned to the right and further back
+                const hare = ModelManager.createModelEntity('hare', '0.5 0 -4', '0 -90 0');
                 ModelManager.playAnimation('hare', 'idle');
                 arContent.appendChild(hare);
                 
@@ -49,10 +49,10 @@ const SceneManager = {
                     console.error('Error playing narration audio:', error);
                 });
                 
-                // Create narration
+                // Create narration - positioned in front of the camera but further back
                 InteractionManager.createNarration(
                     "One sunny morning, the Tortoise and the Hare met on a forest path. They'd never raced before… but something was in the air.",
-                    '0 1.5 0',
+                    '0 1.5 -4',
                     9000
                 ).then(() => {
                     // After narration, show a HTML button overlay instead of 3D button
@@ -112,7 +112,7 @@ const SceneManager = {
                     return InteractionManager.createDialogue(
                         'Hare',
                         'Hey slowpoke, want to race just for fun?',
-                        '0.5 1 0',
+                        '0.5 1 -4',
                         5000
                     );
                 }).catch(error => {
@@ -121,7 +121,7 @@ const SceneManager = {
                     return InteractionManager.createDialogue(
                         'Hare',
                         'Hey slowpoke, want to race just for fun?',
-                        '0.5 1 0',
+                        '0.5 1 -4',
                         5000
                     );
                 }).then(() => {
@@ -138,7 +138,7 @@ const SceneManager = {
                         return InteractionManager.createDialogue(
                             'Tortoise',
                             'Sure, let\'s see who keeps going longer.',
-                            '-0.5 1 0',
+                            '-0.5 1 -4',
                             5000
                         );
                     }).catch(error => {
@@ -147,7 +147,7 @@ const SceneManager = {
                         return InteractionManager.createDialogue(
                             'Tortoise',
                             'Sure, let\'s see who keeps going longer.',
-                            '-0.5 1 0',
+                            '-0.5 1 -4',
                             5000
                         );
                     });
@@ -219,25 +219,25 @@ const SceneManager = {
                 }); 
 
                 // Create ground with longer path
-                const ground = ModelManager.createModelEntity('grassPatch', '0 0 0', '0 0 0', '2 1 2');
+                const ground = ModelManager.createModelEntity('grassPatch', '0 0 -4', '0 0 0', '2 1 2');
                 arContent.appendChild(ground);
                 
-                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 0', '0 90 0', '2 1 1');
+                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 -4', '0 90 0', '2 1 1');
                 arContent.appendChild(path);
                 
                 // Create trees for scenery
-                const tree1 = ModelManager.createModelEntity('tree', '-1 0 -1', '0 45 0');
+                const tree1 = ModelManager.createModelEntity('tree', '0.8 0 -4.5', '0 45 0');
                 arContent.appendChild(tree1);
                 
-                const tree2 = ModelManager.createModelEntity('tree', '1 0 -1', '0 -30 0');
+                const tree2 = ModelManager.createModelEntity('tree', '-0.8 0 -4.5', '0 -30 0');
                 arContent.appendChild(tree2);
                 
                 // Create tortoise at starting position - positioned to the side
-                const tortoise = ModelManager.createModelEntity('tortoise', '-1 0.3 0.6', '0 90 0');
+                const tortoise = ModelManager.createModelEntity('tortoise', '-0.5 0.3 -3.5', '0 90 0');
                 arContent.appendChild(tortoise);
                 
                 // Create hare at starting position - positioned to the other side
-                const hare = ModelManager.createModelEntity('hare', '-0.8 0.0 -0.6', '0 90 0');
+                const hare = ModelManager.createModelEntity('hare', '-0.5 0.0 -4', '0 90 0');
                 arContent.appendChild(hare);
                 
                 // Update scene info
@@ -257,10 +257,10 @@ const SceneManager = {
                     ModelManager.playAnimation('tortoise', 'walk');
                     
                     // Move the hare quickly - maintaining z-axis position
-                    this.moveModel('hare', '-0.8 0.0 -0.6', '1 0 -0.6', 3000);
+                    this.moveModel('hare', '-0.5 0.0 -4', '1 0 -4', 3000);
                     
                     // Move the tortoise slowly - maintaining z-axis position
-                    this.moveModel('tortoise', '-1 0.3 0.6', '-0.5 0.3 0.6', 6000);
+                    this.moveModel('tortoise', '-0.5 0.3 -3.5', '1 0.3 -3.5', 6000);
                     
                     // After animations, show continue button as HTML overlay
                     setTimeout(() => {
@@ -349,21 +349,21 @@ const SceneManager = {
                     console.error('Error playing narration audio:', error);
                 });
                 // Create ground with longer path
-                const ground = ModelManager.createModelEntity('grassPatch', '0 0 0', '0 0 0', '2 1 2');
+                const ground = ModelManager.createModelEntity('grassPatch', '0 0 -4', '0 0 0', '2 1 2');
                 arContent.appendChild(ground);
                 
-                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 0', '0 90 0', '2 1 1');
+                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 -4', '0 90 0', '2 1 1');
                 arContent.appendChild(path);
                 
                 // Create trees for scenery
-                const tree1 = ModelManager.createModelEntity('tree', '-1 0 -1', '0 45 0');
+                const tree1 = ModelManager.createModelEntity('tree', '-0.8 0 -4.5', '0 45 0');
                 arContent.appendChild(tree1);
                 
-                const tree2 = ModelManager.createModelEntity('tree', '1 0 -1', '0 -30 0');
+                const tree2 = ModelManager.createModelEntity('tree', '0.8 0 -4.5', '0 -30 0');
                 arContent.appendChild(tree2);
                 
                 // Create tortoise in the middle of the path
-                const tortoise = ModelManager.createModelEntity('tortoise', '-0.5 0.3 0', '0 90 0');
+                const tortoise = ModelManager.createModelEntity('tortoise', '-0.5 0.3 -3.5', '0 90 0');
                 tortoise.setAttribute('class', 'interactive'); // Make tortoise interactive for tapping
                 tortoise.setAttribute('id', 'tortoise-model');
                 ModelManager.playAnimation('tortoise', 'walk'); // Start with walking animation
@@ -381,7 +381,7 @@ const SceneManager = {
                 // Start the scene with narration
                 InteractionManager.createNarration(
                     "As Hare speeds ahead, Tortoise stays focused, moving at his own pace.",
-                    '0 1.5 0',
+                    '-0.5 0.3 -3.5',
                     6000
                 ).then(() => {
                     // Start tortoise movement animation
@@ -404,7 +404,7 @@ const SceneManager = {
                     return InteractionManager.createDialogue(
                         'Tortoise',
                         "No rush. I'll just keep moving forward.",
-                        '-0.5 1 0',
+                        '-0.5 0.3 -3.5',
                         5000
                     );
                 }).catch(error => {
@@ -413,7 +413,7 @@ const SceneManager = {
                     return InteractionManager.createDialogue(
                         'Tortoise',
                         "No rush. I'll just keep moving forward.",
-                        '-0.5 1 0',
+                        '-0.5 0.3 -3.5',
                         5000
                     );
                 }).then(() => {
@@ -425,8 +425,8 @@ const SceneManager = {
             // Animate the tortoise moving forward slowly
             animateTortoiseMovement: function() {
                 const tortoise = document.getElementById('tortoise-model');
-                const startPos = '-0.5 0.3 0';
-                const endPos = '0.5 0.3 0';
+                const startPos = '-0.5 0.3 -3.5';
+                const endPos = '0.5 0.3 -3.5';
                 const duration = 10000; // 10 seconds for slow movement
                 
                 const startTime = Date.now();
@@ -508,24 +508,24 @@ const SceneManager = {
                 });
                 
                 // Create ground with longer path
-                const ground = ModelManager.createModelEntity('grassPatch', '0 0 0', '0 0 0', '3 1 3');
+                const ground = ModelManager.createModelEntity('grassPatch', '0 0 -4', '0 0 0', '3 1 3');
                 arContent.appendChild(ground);
                 
-                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 0', '0 90 0', '2 1 1');
+                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 -4', '0 90 0', '2 1 1');
                 arContent.appendChild(path);
                 
                 // Create tree for the hare to rest under
-                const tree = ModelManager.createModelEntity('tree', '0.5 0 -0.5', '0 45 0', '0.007 0.007 0.007');
+                const tree = ModelManager.createModelEntity('tree', '0.8 0 -4.5', '0 45 0', '0.007 0.007 0.007');
                 arContent.appendChild(tree);
                 
                 // Create hare in sleeping position under the tree
-                const hare = ModelManager.createModelEntity('hare', '0.5 0.0 -0.3', '0 -45 0');
+                const hare = ModelManager.createModelEntity('hare', '0.5 0.0 -4', '0 -45 0');
                 hare.setAttribute('id', 'hare-model');
                 ModelManager.playAnimation('hare', 'sleep'); // Start with sleeping animation
                 arContent.appendChild(hare);
                 
                 // Create tortoise approaching
-                const tortoise = ModelManager.createModelEntity('tortoise', '-0.5 0.3 0.3', '0 90 0');
+                const tortoise = ModelManager.createModelEntity('tortoise', '-0.5 0.3 -3.5', '0 90 0');
                 tortoise.setAttribute('id', 'tortoise-model');
                 tortoise.setAttribute('class', 'scene4-tortoise'); // Add a class for easier selection
                 ModelManager.playAnimation('tortoise', 'walk'); // Walking animation
@@ -538,7 +538,7 @@ const SceneManager = {
                 // Start the scene with narration
                 InteractionManager.createNarration(
                     "Hare, tired from his fast start, takes a nap, while Tortoise moves steadily forward.",
-                    '0 1.5 0',
+                    '0.5 0 -4',
                     6000
                 ).then(() => {
                     // Create interactive choice buttons
@@ -621,7 +621,7 @@ const SceneManager = {
                 InteractionManager.createNarration(
                     
                     "The Hare continues to sleep soundly...",
-                    '0 1.5 0',
+                    '0.5 0 -4',
                     4000
                 ).then(() => {
                     // Show the choice buttons again after a delay
@@ -651,8 +651,8 @@ const SceneManager = {
                 console.log('Moving tortoise:', tortoise);
                 
                 // Define start and end positions explicitly
-                const startPos = '-0.5 0.3 0.3';
-                const endPos = '0.8 0.3 0.3';
+                const startPos = '-0.5 0.3 -3.5';
+                const endPos = '0.8 0.3 -3.5';
                 const duration = 5000; // 5 seconds for movement
                 
                 // Set initial position to make sure we start from the right place
@@ -690,7 +690,7 @@ const SceneManager = {
                         // Show narration about the choice
                         InteractionManager.createNarration(
                             "The Tortoise moves ahead while the Hare sleeps!",
-                            '0 1.5 0',
+                            '0.5 0.3 -4',
                             4000
                         ).then(() => {
                             // Show continue button as HTML overlay
@@ -776,27 +776,27 @@ const SceneManager = {
                 }
                 
                 // Create ground with longer path
-                const ground = ModelManager.createModelEntity('grassPatch', '0 0 0', '0 0 0', '2 1 2');
+                const ground = ModelManager.createModelEntity('grassPatch', '0 0 -4', '0 0 0', '2 1 2');
                 arContent.appendChild(ground);
                 
-                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 0', '0 90 0', '2 1 1');
+                const path = ModelManager.createModelEntity('dirtPath', '0 0.01 -4', '0 90 0', '2 1 1');
                 arContent.appendChild(path);
                 
                 // Create finish line
-                const finishLine = ModelManager.createModelEntity('finish', '0.8 0.8 0', '0 -90 0', '0.25 0.25 0.25');
+                const finishLine = ModelManager.createModelEntity('finish', '0.8 0.8 -4', '0 -90 0', '0.25 0.25 0.25');
                 finishLine.setAttribute('id', 'finish-line-model');
                 finishLine.setAttribute('class', 'interactive');
                 finishLine.addEventListener('click', () => this.animateRaceFinish(arContent));
                 arContent.appendChild(finishLine);
                 
                 // Create tortoise at starting position - facing right direction
-                const tortoise = ModelManager.createModelEntity('tortoise', '-1.1 0.3 0.2', '0 90 0');
+                const tortoise = ModelManager.createModelEntity('tortoise', '-1.1 0.3 -4', '0 90 0');
                 tortoise.setAttribute('id', 'tortoise-model');
                 ModelManager.playAnimation('tortoise', 'idle'); 
                 arContent.appendChild(tortoise);
                 
                 // Create hare at starting position - facing right direction but initially invisible
-                const hare = ModelManager.createModelEntity('hare', '-1.5 0.0 -0.2', '0 90 0');
+                const hare = ModelManager.createModelEntity('hare', '-1.5 0.0 -4.2', '0 90 0');
                 hare.setAttribute('id', 'hare-model');
                 hare.setAttribute('visible', 'false'); // Initially invisible
                 ModelManager.playAnimation('hare');
@@ -813,12 +813,12 @@ const SceneManager = {
                 const hare = document.getElementById('hare-model');
                 
                 // Start positions
-                const tortoiseStartPos = '-1.1 0.3 0.2';
-                const hareStartPos = '-1.5 0.0 -0.2';
+                const tortoiseStartPos = '-1.1 0.3 -4';
+                const hareStartPos = '-1.5 0.0 -4.2';
                 
                 // End positions - tortoise crosses finish line, hare just behind
-                const tortoiseEndPos = '1.5 0.3 0.2'; // Past the finish line
-                const hareEndPos = '1.0 0.0 -0.2'; // Just before finish line
+                const tortoiseEndPos = '1.5 0.3 -4'; // Past the finish line
+                const hareEndPos = '1.0 0.0 -4.2'; // Just before finish line
                 
                 // Set initial positions and animations
                 tortoise.setAttribute('position', tortoiseStartPos);
@@ -913,7 +913,7 @@ const SceneManager = {
                 // Play narration
                 InteractionManager.createNarration(
                     "And just like that, Tortoise crosses the finish line, steady and calm. Hare arrives just moments later, surprised and exhausted.",
-                    '0 1.5 0',
+                    '0 1.5 -4',
                     9000
                 ).then(() => {
                     // Show continue button as HTML overlay
@@ -966,16 +966,16 @@ const SceneManager = {
                 }
                 
                 // Create ground
-                const ground = ModelManager.createModelEntity('grassPatch', '0 0 0', '0 0 0', '2 1 2');
+                const ground = ModelManager.createModelEntity('grassPatch', '0 0 -4', '0 0 0', '2 1 2');
                 arContent.appendChild(ground);
                 
                 // Create tortoise and hare standing side by side
-                const tortoise = ModelManager.createModelEntity('tortoise', '-0.6 0.3 0', '0 45 0');
+                const tortoise = ModelManager.createModelEntity('tortoise', '-0.6 0.3 -4', '0 45 0');
                 tortoise.setAttribute('id', 'tortoise-model');
                 ModelManager.playAnimation('tortoise', 'idle');
                 arContent.appendChild(tortoise);
                 
-                const hare = ModelManager.createModelEntity('hare', '0.6 0.0 0', '0 -45 0');
+                const hare = ModelManager.createModelEntity('hare', '0.6 0.0 -4', '0 -45 0');
                 hare.setAttribute('id', 'hare-model');
                 ModelManager.playAnimation('hare', 'idle');
                 arContent.appendChild(hare);
@@ -989,7 +989,7 @@ const SceneManager = {
                 InteractionManager.createDialogue(
                     'Tortoise',
                     "Slow and steady wins the race!",
-                    '-0.6 1 0',
+                    '-0.6 1 -4',
                     4000
                 ).then(() => {
                     const naration9 = new Audio('sounds/hare2.mp3');
@@ -1002,14 +1002,14 @@ const SceneManager = {
                     return InteractionManager.createDialogue(
                         'Hare',
                         "I... I should've kept going!",
-                        '0.6 1 0',
+                        '0.6 1 -4',
                         4000
                     );
                 });
                 
                 // Create quote board
                 const quoteBoard = document.createElement('a-entity');
-                quoteBoard.setAttribute('position', '0 1.2 0');
+                quoteBoard.setAttribute('position', '0 1.2 -4');
                 quoteBoard.setAttribute('geometry', 'primitive: plane; width: 1.5; height: 0.8');
                 quoteBoard.setAttribute('material', 'color: #f5f5dc; opacity: 0.9');
                 quoteBoard.setAttribute('class', 'interactive');
@@ -1044,7 +1044,7 @@ const SceneManager = {
                 
                 InteractionManager.createNarration(
                     "The race doesn\'t always go to the fastest, but to those who keep going.",
-                    '0 1.5 0',
+                    '0 1.5 -4',
                     9000
                 ).then(() => {
                     // Add exit button as HTML overlay in the middle of the screen
