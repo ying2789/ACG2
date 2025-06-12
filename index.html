@@ -63,12 +63,6 @@
         </div>
     </div>
 
-    <div id="scale-controls" style="position: absolute; bottom: 10px; left: 10px; z-index: 999;">
-        <button onclick="scaleModel(1.1)">Zoom In</button>
-        <button onclick="scaleModel(0.9)">Zoom Out</button>
-    </div>
-
-
     <!-- AR Scene -->
     <a-scene 
         embedded
@@ -80,7 +74,6 @@
         loading="autoStart: true; loadingMessage: Loading AR Experience; loadingImage: #loading-image; loadingColor: #4CAF50">
 
         <!-- Assets preload -->
-
         <a-assets>
             <img id="loading-image" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjUwIiBmaWxsPSIjNENBRjUwIi8+PC9zdmc+" crossorigin="anonymous">
         </a-assets>
@@ -89,7 +82,7 @@
         <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
 
         <!-- AR Content will be added here via JavaScript -->
-        <a-entity id="ar-content" gesture-handler></a-entity>
+        <a-entity id="ar-content"></a-entity>
 
         <!-- Raycaster for interaction -->
         <a-entity id="raycaster" raycaster="objects: .interactive; far: 10" cursor="fuse: false"></a-entity>
@@ -108,7 +101,6 @@
     <script src="js/interactions.js"></script>
     <script src="js/scenes.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/gesture-handler.js"></script>
     
     <!-- Script to handle fallback mode -->
     <script>
@@ -159,16 +151,6 @@
                 }
             }
         });
-
-        function scaleModel(factor) {
-            const model = document.getElementById('ar-content');
-            const currentScale = model.getAttribute('scale');
-            model.setAttribute('scale', {
-            x: currentScale.x * factor,
-            y: currentScale.y * factor,
-            z: currentScale.z * factor
-            });
-        }
     </script>
 <!-- Fallback UI for non-AR mode -->
 <div id="fallback-ui" class="hidden fallback-content">
