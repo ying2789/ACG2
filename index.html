@@ -12,6 +12,36 @@
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <!-- Add comprehensive error handling for AR initialization -->
     <script>
+        window.onload = async function () {
+        try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            const videoDevices = devices.filter(device => device.kind === 'videoinput');
+    
+            let backCamera = videoDevices.find(device =>
+                device.label.toLowerCase().includes('back') ||
+                device.label.toLowerCase().includes('environment')
+            );
+    
+            // 如果找到了后摄
+            if (backCamera) {
+                const constraints = {
+                    audio: false,
+                    video: { deviceId: { exact: backCamera.deviceId } }
+                };
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    
+                // 替换 AR.js 默认摄像头源
+                const videoElement = document.querySelector('video');
+                if (videoElement) {
+                    videoElement.srcObject = stream;
+                }
+            } else {
+                console.warn("未检测到后置摄像头，将使用默认摄像头。");
+            }
+        } catch (err) {
+            console.error("摄像头选择失败：", err);
+        }
+    };
         // Global error handler
         window.addEventListener('error', function(event) {
             console.error('Error caught:', event.error);
