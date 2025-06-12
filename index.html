@@ -10,8 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/ar.js@2.3.4/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-gesture-detector@4.0.5/dist/aframe-gesture-detector.min.js"></script>
-
     <!-- Add comprehensive error handling for AR initialization -->
     <script>
         // Global error handler
@@ -65,6 +63,12 @@
         </div>
     </div>
 
+    <div id="scale-controls" style="position: absolute; bottom: 10px; left: 10px; z-index: 999;">
+        <button onclick="scaleModel(1.1)">Zoom In</button>
+        <button onclick="scaleModel(0.9)">Zoom Out</button>
+    </div>
+
+
     <!-- AR Scene -->
     <a-scene 
         embedded
@@ -74,8 +78,9 @@
         gesture-detector
         id="scene"
         loading="autoStart: true; loadingMessage: Loading AR Experience; loadingImage: #loading-image; loadingColor: #4CAF50">
-        <a-entity gesture-detector simple-pinch-zoom></a-entity>
+
         <!-- Assets preload -->
+
         <a-assets>
             <img id="loading-image" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjUwIiBmaWxsPSIjNENBRjUwIi8+PC9zdmc+" crossorigin="anonymous">
         </a-assets>
@@ -84,7 +89,7 @@
         <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
 
         <!-- AR Content will be added here via JavaScript -->
-        <a-entity id="ar-content"></a-entity>
+        <a-entity id="ar-content" gesture-handler></a-entity>
 
         <!-- Raycaster for interaction -->
         <a-entity id="raycaster" raycaster="objects: .interactive; far: 10" cursor="fuse: false"></a-entity>
@@ -103,6 +108,7 @@
     <script src="js/interactions.js"></script>
     <script src="js/scenes.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/gesture-handler.js"></script>
     
     <!-- Script to handle fallback mode -->
     <script>
@@ -153,6 +159,16 @@
                 }
             }
         });
+
+        function scaleModel(factor) {
+            const model = document.getElementById('ar-content');
+            const currentScale = model.getAttribute('scale');
+            model.setAttribute('scale', {
+            x: currentScale.x * factor,
+            y: currentScale.y * factor,
+            z: currentScale.z * factor
+            });
+        }
     </script>
 <!-- Fallback UI for non-AR mode -->
 <div id="fallback-ui" class="hidden fallback-content">
@@ -160,26 +176,6 @@
     <p>If AR does not start, you can try the non-AR version of the story.</p>
     <button id="fallback-start" class="ar-button">Start Without AR</button>
 </div>
-<script>
-AFRAME.registerComponent('simple-pinch-zoom', {
-  init: function () {
-    this.initialSpread = null;
-    this.cameraEl = document.querySelector('[camera]');
-    
-    this.el.addEventListener('twofingermove', e => {
-      if (!this.initialSpread) this.initialSpread = e.detail.spread;
-      const zoomDelta = (this.initialSpread - e.detail.spread) * 0.005;
-      const cam = this.cameraEl.object3D.position;
-      cam.z = Math.min(5, Math.max(0.5, cam.z + zoomDelta));
-      this.initialSpread = e.detail.spread;
-    });
-
-    this.el.addEventListener('gestureend', () => {
-      this.initialSpread = null;
-    });
-  }
-});
-</script>
 
 </body>
 </html>
