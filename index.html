@@ -35,6 +35,7 @@
     </script>
 </head>
 <body>
+    <select id="cameraSelect" style="background-color: rgba(76, 175, 80, 0.8);"></select>
     <div id="loading-screen">
         <div class="loading-content">
             <h1>The Tortoise and the Hare</h1>
@@ -104,6 +105,25 @@
     
     <!-- Script to handle fallback mode -->
     <script>
+        navigator.mediaDevices.enumerateDevices().then(function(devices) {
+            const videoDevices = devices.filter(device => device.kind === 'videoinput');
+            const select = document.getElementById('cameraSelect');
+        
+            videoDevices.forEach((device, index) => {
+                const option = document.createElement('option');
+                option.value = device.deviceId;
+                option.text = device.label || `Camera ${index + 1}`;
+                select.appendChild(option);
+            });
+        
+            select.addEventListener('change', async function () {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { deviceId: { exact: this.value } }
+                });
+                const video = document.querySelector('video');
+                video.srcObject = stream;
+            });
+        });
         document.getElementById('retry-button').addEventListener('click', function() {
             window.location.reload();
         });
